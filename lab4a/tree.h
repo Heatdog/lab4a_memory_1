@@ -1,4 +1,4 @@
-#pragma once
+
 
 #ifndef LAB4A_SEM2_TREE_H
 #define LAB4A_SEM2_TREE_H
