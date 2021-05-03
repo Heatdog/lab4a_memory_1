@@ -1,6 +1,4 @@
-﻿#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h> 
+
 
 #include <stdio.h>
 #include "tree.h"
@@ -14,6 +12,5 @@ int main() {
     dialog(tree);
     printf("That's all. Bye!\n");
     delete_tree(tree);
-    _CrtDumpMemoryLeaks();
     return 0;
 }
