@@ -88,13 +88,13 @@ void add_next_node_next(struct Info* info, struct Info* add) {
 
 void D_Show(Tree* tree) {
     int choose;
+    if (tree->node == NULL){
+        printf("Tree is empty!\n");
+    }
     printf("Do you want to see all tree like a normal tree (print 1) or back tree(print 2)?\nChoose-->");
     scan_int(&choose);
     if (choose == 1){
-        int k = print_tree(tree->node, " ", 0);
-        if (k == 1){
-            printf("Tree is empty!\n");
-        }
+        print_tree(tree->node, 0);
     } else{
         show_tree(tree->node);
         printf("\n");
@@ -114,8 +114,11 @@ void show_tree(struct Node* node) {
 
 void show_node(struct Node* node, int offset) {
     int i = 0;
-    printf("%s //", node->data.key);
-    print_info(node->data.info, i, offset);
+    for (int k = 0; k < offset; k++){
+        printf("\t");
+    }
+    printf("[%s]", node->data.key);
+    print_info(node->data.info, i, 0);
 }
 
 ///////////////////////////////////////////////////////////////////
@@ -154,17 +157,19 @@ void delete_node_next(struct Info* info) {
 void D_Find(Tree* tree) {
     char* key = NULL;
     struct Info* info = NULL;
-    int i = 0, choose;
+    int i = 0, choose, release;
     printf("Do you want to find certain (print 1) or the most different element (print 2)?\nChoose-->");
     scan_int(&choose);
     printf("Please, enter key\nKey-->");
     key = scan_string(key);
     if (choose == 1) {
+        printf("Please, enter release\nEnter-->");
+        scan_int(&release);
         info = find_info(tree, key);
         if (info == NULL) {
             return;
         }
-        print_info(info, i, 0);
+        print_info(info, i, release);
     }
     else {
         find_different(tree, key);
@@ -189,30 +194,33 @@ struct Node* find_info_node(struct Node* node, char* key) {
         return NULL;
     }
     else {
-        int result = strcmp(key, node->data.key);//ñðàâíåíèå ïî ASCII
-        if (result > 0) {//êëþ÷ áîëüøå óçëà (èäåì âïðàâî)
+        int result = strcmp(key, node->data.key);
+        if (result > 0) {
             return find_info_node(node->right, key);
         }
-        else if (result < 0) {//êëþ÷ ìåíüøå óçëà (èäåì âëåâî)
+        else if (result < 0) {
             return find_info_node(node->left, key);
         }
         return node;
     }
 }
 
-void print_info(struct Info* info, int i, int offset) {
+void print_info(struct Info* info, int i, int release) {
     if (info == NULL) {
         return;
     }
     else {
         i++;
-        printf("%d//%d//%s//release-->%d\n", info->first, info->second, info->word, i);
-        if (info->next != NULL) {
-            for (int k = 0; k < offset; k++) {
-                printf("\t");
+        if (release == 0){
+            printf("%d//%d//%s//release-->%d", info->first, info->second, info->word, i);
+            print_info(info->next, i, release);
+        } else{
+            if (i == release){
+                printf("%d//%d//%s//release-->%d", info->first, info->second, info->word, i);
+            } else{
+                print_info(info->next, i, release);
             }
         }
-        print_info(info->next, i, offset);
     }
 }
 
@@ -230,21 +238,21 @@ void D_Delete(Tree* tree) {
 void del_node(Tree* tree, char* key) {
     struct Node* node = NULL;
     node = tree->node;
-    node = find_info_node(node, key);//íàõîäèì óçåë ïî êëþ÷ó
+    node = find_info_node(node, key);
     if (node == NULL){
         return;
     }
     if (node->data.info->next == NULL) {
-        node = del_node_1(tree, node);//ëèñòüÿ
-        if (node == NULL) {//ó÷ïåøíî óäàëèëè ëèñòîê (ïîñëåäíèé ýëåìåíò â âåäêå)
+        node = del_node_1(tree, node);
+        if (node == NULL) {
             return;
         }
-        else if (node->right != NULL && node->left != NULL) {//è ñëåâà è ñïðàâà åñòü ýëåìåíû
+        else if (node->right != NULL && node->left != NULL) {
             del_node_2(node);
             return;
         }
         else {
-            del_node_3(tree, node);// åñòü ëèáî ñïðàâà ëèáî ñëåâà
+            del_node_3(tree, node);
             return;
         }
     }
@@ -457,22 +465,13 @@ Info *info_rand(struct Info* info){
 
 //////////////////////////////////////////////
 
-int print_tree(struct Node* parent, char *key, int offset) {
-    Node *ptr = parent;
-    if (ptr == NULL) {
-        return 1;
+void print_tree(struct Node* node, int offset) {
+    if (node == NULL){
+        return;
+    } else{
+        print_tree(node->left, offset+1);
+        show_node(node, offset);
+        printf("\n");
+        print_tree(node->right, offset+1);
     }
-    if (strcmp(ptr->data.key, key) > 0) {
-        print_tree(ptr->left, key, offset + 1);
-        for (int i = 0; i < offset; i++) {
-            printf("\t");
-        }
-        if (ptr != NULL){
-            show_node(ptr, offset);
-        }
-        print_tree(ptr->right, key, offset + 1);
-    } else {
-        print_tree(ptr->right, key, offset);
-    }
-    return 0;
 }
