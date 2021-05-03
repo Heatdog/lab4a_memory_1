@@ -27,34 +27,38 @@ typedef struct tree {
 }Tree;
 
 
-Tree* new_tree(Tree*);
+Tree *new_tree(Tree*);
 void D_Add(Tree*);
 void D_Find(Tree*);
 void D_Delete(Tree*);
 void D_Show(Tree*);
+void D_Timing();
 void add_tree(Tree*, char*, struct Info*);
 void show_tree(struct Node*);
 void delete_tree(Tree*);
 struct Node* new_node(struct Node*, char*, struct Info*);
-void add_tree_no_null(struct Node*, char*, struct Info*);
-void add_next_node(struct Node*, struct Info*);
-void show_node(struct Node*);
+void add_tree_no_null(struct Node*, char *, struct Info*);
+void add_next_node(struct Node* ,struct Info*);
+void show_node(struct Node*, int);
 void delete_node(struct Node*);
 void delete_node_next(struct Info*);
-struct Info* find_info(Tree*, char*);
-struct Node* find_info_node(struct Node*, char*);
-void print_info(struct Info*, int);
+struct Info*find_info(Tree*, char *);
+struct Node* find_info_node(struct Node*, char *);
+void print_info(struct Info*, int, int);
 void add_next_node_next(struct Info*, struct Info*);
-void del_node(Tree*, char*);
+void del_node(Tree*, char *);
 struct Node* del_node_1(Tree*, struct Node*);
 void del_node_2(struct Node*);
-void del_node_3(Tree*, struct Node*);
+void del_node_3(Tree *,struct Node*);
 void del_node_old(struct Node*);
-void find_different(Tree*, char*);
-Node* go_to_right(Node*);
+void find_different(Tree*, char *);
+Node *go_to_right(Node*);
 struct Node* go_to_left(Node*);
-//void show_tree_like_tree(Node*, struct tree*, int);
-//void show_tree_like(struct Node*, struct tree*);
+struct Node *comparison(struct Node*, struct Node*, Node*);
+int comparison_back(char *, char *);
+char* key_random(char *);
+Info *info_rand(struct Info*);
+int print_tree(struct Node*, char *, int);
 
 
 
