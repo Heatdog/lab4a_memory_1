@@ -1,15 +1,10 @@
-#define _CRTDBG_MAP_ALLOC
-#define _CRT_SECURE_NO_WARNINGS
-#include <stdlib.h>
-#include <crtdbg.h> 
-
-
 #include <stdio.h>
 #include "for_all.h"
+#include <stdlib.h>
 #include <string.h>
 
-const char* msgs[] = { "0. Quit", "1. Add", "2. Find", "3. Delete", "4. Show" };
-const int N = sizeof(msgs) / sizeof(msgs[0]);
+const char *msgs[] = {"0. Quit", "1. Add", "2. Find", "3. Delete", "4. Show", "5.Timing"};
+const int N =sizeof(msgs) / sizeof(msgs[0]);
 
 void dialog(Tree* tree)
 {
@@ -21,21 +16,30 @@ void dialog(Tree* tree)
         }
         puts("Make your choice: --> ");
         scan_int(&rc);
-        if (rc == 0) {
-            rc = -1;
-            break;
-        }
-        else if (rc == 1) {
-            D_Add(tree);
-        }
-        else if (rc == 4) {
-            D_Show(tree);
-        }
-        else if (rc == 2) {
-            D_Find(tree);
-        }
-        else if (rc == 3) {
-            D_Delete(tree);
+        switch (rc) {
+            case 0:{
+                return;
+            }
+            case 1:{
+                D_Add(tree);
+                break;
+            }
+            case 2:{
+                D_Find(tree);
+                break;
+            }
+            case 3:{
+                D_Delete(tree);
+                break;
+            }
+            case 4:{
+                D_Show(tree);
+                break;
+            }
+            default:{
+                D_Timing();
+                break;
+            }
         }
     }
 }
