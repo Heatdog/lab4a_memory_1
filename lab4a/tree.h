@@ -44,7 +44,7 @@ void delete_node(struct Node*);
 void delete_node_next(struct Info*);
 struct Info*find_info(Tree*, char *);
 struct Node* find_info_node(struct Node*, char *);
-void print_info(struct Info*, int, int);
+void print_info(struct Info*, int, int );
 void add_next_node_next(struct Info*, struct Info*);
 void del_node(Tree*, char *);
 struct Node* del_node_1(Tree*, struct Node*);
@@ -58,7 +58,7 @@ struct Node *comparison(struct Node*, struct Node*, Node*);
 int comparison_back(char *, char *);
 char* key_random(char *);
 Info *info_rand(struct Info*);
-int print_tree(struct Node*, char *, int);
+void print_tree(struct Node*, int);
 
 
 
